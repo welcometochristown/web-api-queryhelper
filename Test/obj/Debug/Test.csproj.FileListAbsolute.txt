@@ -1,0 +1,12 @@
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.csproj.CoreCompileInputs.cache
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\Test.exe.config
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\Test.exe
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\Test.pdb
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\web-api-queryhelper.dll
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\System.Net.Http.Formatting.dll
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\web-api-queryhelper.pdb
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\bin\Debug\web-api-queryhelper.dll.config
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.csprojAssemblyReference.cache
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.csproj.CopyComplete
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.exe
+D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.pdb
