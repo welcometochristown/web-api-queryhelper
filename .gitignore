@@ -1,2 +1,4 @@
 web-api-queryhelper/bin/
-Test/bin/
+web-api-queryhelper/obj/
+/Test/bin/
+/Test/obj/
