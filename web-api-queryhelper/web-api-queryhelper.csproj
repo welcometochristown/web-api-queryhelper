@@ -69,6 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JSONQueryHelper.cs" />
+    <Compile Include="JSONQueryHelper_Delete.cs" />
+    <Compile Include="JSONQueryHelper_Get.cs" />
+    <Compile Include="JSONQueryHelper_Post.cs" />
+    <Compile Include="JSONQueryHelper_Put.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,3 +10,16 @@ D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.csprojAs
 D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.csproj.CopyComplete
 D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.exe
 D:\Code\Git\web-api-queryhelper\web-api-queryhelper\Test\obj\Debug\Test.pdb
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\Test.exe.config
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\Test.exe
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\Test.pdb
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\web-api-queryhelper.dll
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\System.Net.Http.Formatting.dll
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\Newtonsoft.Json.dll
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\web-api-queryhelper.pdb
+D:\Source\Git\web-api-queryhelper\Test\bin\Debug\web-api-queryhelper.dll.config
+D:\Source\Git\web-api-queryhelper\Test\obj\Debug\Test.csprojAssemblyReference.cache
+D:\Source\Git\web-api-queryhelper\Test\obj\Debug\Test.csproj.CoreCompileInputs.cache
+D:\Source\Git\web-api-queryhelper\Test\obj\Debug\Test.csproj.CopyComplete
+D:\Source\Git\web-api-queryhelper\Test\obj\Debug\Test.exe
+D:\Source\Git\web-api-queryhelper\Test\obj\Debug\Test.pdb
