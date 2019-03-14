@@ -74,6 +74,7 @@
     <Compile Include="JSONQueryHelper_Post.cs" />
     <Compile Include="JSONQueryHelper_Put.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -44,7 +44,7 @@ namespace web_api_queryhelper
             var response = await APIResultAction(clientAction, server, clientHandler, headerCollection, authenticationHeader, timeout);
 
             if (!response.IsSuccessStatusCode)
-                throw new JSONQueryHelperException($"Request Failed ({response.StatusCode}) - {response.ReasonPhrase}", response);
+                throw new QueryHelperException($"Request Query Failed ({response.StatusCode}) - {response.ReasonPhrase}", response);
             else 
                 return await response.Content.ReadAsAsync<T>();
         }
@@ -82,20 +82,4 @@ namespace web_api_queryhelper
 
     }
 
-    /// <summary>
-    /// Exception returned if request fails. 
-    ///     Contains [Response] of type HttpReponseMessage
-    /// </summary>
-    public class JSONQueryHelperException : Exception
-    {
-        public HttpResponseMessage Response { get; private set; }
-
-        public JSONQueryHelperException(string message, HttpResponseMessage response)
-            : base(message) { this.Response = response; }
-
-        public JSONQueryHelperException(string message, HttpResponseMessage response, Exception ex)
-          : base(message, ex) { this.Response = response; }
-
-
-    }
 }
