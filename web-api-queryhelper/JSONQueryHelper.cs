@@ -23,16 +23,18 @@ namespace web_api_queryhelper
         /// <param name="headerCollection"></param>
         /// <param name="authenticationHeader"></param>
         /// <param name="timeout"></param>
-        private static async void APIResult(Func<HttpClient, Task<HttpResponseMessage>> clientAction, string server, HttpClientHandler clientHandler, NameValueCollection headerCollection, AuthenticationHeaderValue authenticationHeader, TimeSpan timeout)
+        private static async Task APIResult(Func<HttpClient, Task<HttpResponseMessage>> clientAction, string server, HttpClientHandler clientHandler, NameValueCollection headerCollection, AuthenticationHeaderValue authenticationHeader, TimeSpan timeout)
         {
             var response = await APIResultAction(clientAction, server, clientHandler, headerCollection, authenticationHeader, timeout);
 
             if (!response.IsSuccessStatusCode)
                 throw new QueryHelperException($"Request Query Failed ({response.StatusCode}) - {response.ReasonPhrase}", response);
+
         }
 
         /// <summary>
-        /// Api result with [T] response type
+        /// Api result with [T] response type.
+        /// If called from within a winform, this must be wrapped in a new thread to access within a UI thread.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="clientAction"></param>
@@ -48,7 +50,7 @@ namespace web_api_queryhelper
 
             if (!response.IsSuccessStatusCode)
                 throw new QueryHelperException($"Request Query Failed ({response.StatusCode}) - {response.ReasonPhrase}", response);
-            else 
+            else
                 return await response.Content.ReadAsAsync<T>();
         }
 
@@ -83,6 +85,10 @@ namespace web_api_queryhelper
             }
         }
 
+        private static TimeSpan SafeSpan(int seconds)
+        {
+            return (Math.Max(seconds, 0) == 0 ? Timeout.InfiniteTimeSpan : TimeSpan.FromSeconds(seconds));
+        }
     }
 
 }

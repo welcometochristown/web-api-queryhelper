@@ -10,45 +10,45 @@ namespace web_api_queryhelper
     {
         #region void
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  null, new NameValueCollection(), timeout);
+            return PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  null, new NameValueCollection(), timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  authenticationHeader, new NameValueCollection(), timeout);
+            return PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  authenticationHeader, new NameValueCollection(), timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, NameValueCollection headers, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, NameValueCollection headers, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  null, headers, timeout);
+            return PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  null, headers, timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, clientHandler,  null, new NameValueCollection(), timeout);
+            return PutAPIResultAsync(server, apiString, postObject, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
+            return PutAPIResultAsync(server, apiString, postObject, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, clientHandler,  null, headers, timeout);
+            return PutAPIResultAsync(server, apiString, postObject, clientHandler,  null, headers, timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler,  AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
+        public static Task PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler,  AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
         {
             try
             {
-                APIResult(async (HttpClient client) =>
+                return APIResult(async (HttpClient client) =>
                 {
                     return await client.PutAsJsonAsync(apiString, postObject);
 
-                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, SafeSpan(timeout));
             }
             catch (QueryHelperException ex)
             {
@@ -102,7 +102,7 @@ namespace web_api_queryhelper
                 {
                     return await client.PutAsJsonAsync(apiString, postObject);
 
-                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, SafeSpan(timeout));
             }
             catch (QueryHelperException ex)
             {

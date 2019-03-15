@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System;
 using System.Collections.Specialized;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace web_api_queryhelper
 {
@@ -16,46 +11,45 @@ namespace web_api_queryhelper
     {
         #region void
 
-     
-        public static void GetAPIResultAsync(string server, string apiString, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, new HttpClientHandler(), null, new NameValueCollection(), timeout);
+             return GetAPIResultAsync(server, apiString, new HttpClientHandler(), null, new NameValueCollection(), timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, new HttpClientHandler(), authenticationHeader, new NameValueCollection(), timeout);
+            return GetAPIResultAsync(server, apiString, new HttpClientHandler(), authenticationHeader, new NameValueCollection(), timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, NameValueCollection headers, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, NameValueCollection headers, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, new HttpClientHandler(), null, headers, timeout);
+            return GetAPIResultAsync(server, apiString, new HttpClientHandler(), null, headers, timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, clientHandler,  null, new NameValueCollection(), timeout);
+            return GetAPIResultAsync(server, apiString, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
+            return GetAPIResultAsync(server, apiString, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, clientHandler,  null, headers, timeout);
+            return GetAPIResultAsync(server, apiString, clientHandler,  null, headers, timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler,  AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
+        public static Task GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler,  AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
         {
             try
-            { 
-                APIResult(async (HttpClient client) =>
+            {
+                return APIResult(async (HttpClient client) =>
                 {
                      return await client.GetAsync(apiString);
 
-                }, server,  clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server,  clientHandler, headers, authenticationHeader, SafeSpan(timeout));
             }
             catch (QueryHelperException ex)
             {
@@ -73,43 +67,43 @@ namespace web_api_queryhelper
       
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, int timeout = 180)
         {
-            return await GetAPIResultAsync<T>(server, apiString, new HttpClientHandler(), new NameValueCollection(), null, timeout);
+            return await GetAPIResultAsync<T>(server, apiString, new HttpClientHandler(),  null, new NameValueCollection(),  timeout);
         }
 
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await GetAPIResultAsync<T>(server, apiString, new HttpClientHandler(), new NameValueCollection(), authenticationHeader, timeout);
+            return await GetAPIResultAsync<T>(server, apiString, new HttpClientHandler(), authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, NameValueCollection headers, int timeout = 180)
         {
-            return await GetAPIResultAsync<T>(server, apiString, new HttpClientHandler(), headers, null, timeout);
+            return await GetAPIResultAsync<T>(server, apiString, new HttpClientHandler(),  null, headers, timeout);
         }
 
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, int timeout = 180)
         {
-            return await GetAPIResultAsync<T>(server, apiString, clientHandler, new NameValueCollection(), null, timeout);
+            return await GetAPIResultAsync<T>(server, apiString, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await GetAPIResultAsync<T>(server, apiString, clientHandler, new NameValueCollection(), authenticationHeader, timeout);
+            return await GetAPIResultAsync<T>(server, apiString, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-            return await GetAPIResultAsync<T>(server, apiString, clientHandler, headers, null, timeout);
+            return await GetAPIResultAsync<T>(server, apiString, clientHandler, null, headers, timeout);
         }
 
-        public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
         {
             try
-            { 
+            {
                 return await APIResult<T>(async (HttpClient client) =>
                 {
                     return await client.GetAsync(apiString);
 
-                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, SafeSpan(timeout));
             }
             catch (QueryHelperException ex)
             {
