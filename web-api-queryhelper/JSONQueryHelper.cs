@@ -25,7 +25,10 @@ namespace web_api_queryhelper
         /// <param name="timeout"></param>
         private static async void APIResult(Func<HttpClient, Task<HttpResponseMessage>> clientAction, string server, HttpClientHandler clientHandler, NameValueCollection headerCollection, AuthenticationHeaderValue authenticationHeader, TimeSpan timeout)
         {
-            await APIResultAction(clientAction, server, clientHandler, headerCollection, authenticationHeader, timeout);
+            var response = await APIResultAction(clientAction, server, clientHandler, headerCollection, authenticationHeader, timeout);
+
+            if (!response.IsSuccessStatusCode)
+                throw new QueryHelperException($"Request Query Failed ({response.StatusCode}) - {response.ReasonPhrase}", response);
         }
 
         /// <summary>
