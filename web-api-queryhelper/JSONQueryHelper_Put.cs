@@ -10,45 +10,55 @@ namespace web_api_queryhelper
     {
         #region void
 
-
-    
         public static void PutAPIResultAsync(string server, string apiString, object postObject, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(), new NameValueCollection(), null, timeout);
+              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  null, new NameValueCollection(), timeout);
         }
 
         public static void PutAPIResultAsync(string server, string apiString, object postObject, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(), new NameValueCollection(), authenticationHeader, timeout);
+              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static void PutAPIResultAsync(string server, string apiString, object postObject, NameValueCollection headers, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(), headers, null, timeout);
+              PutAPIResultAsync(server, apiString, postObject, new HttpClientHandler(),  null, headers, timeout);
         }
 
         public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, clientHandler, new NameValueCollection(), null, timeout);
+              PutAPIResultAsync(server, apiString, postObject, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
         public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, clientHandler, new NameValueCollection(), authenticationHeader, timeout);
+              PutAPIResultAsync(server, apiString, postObject, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-              PutAPIResultAsync(server, apiString, postObject, clientHandler, headers, null, timeout);
+              PutAPIResultAsync(server, apiString, postObject, clientHandler,  null, headers, timeout);
         }
 
-        public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static void PutAPIResultAsync(string server, string apiString, object postObject, HttpClientHandler clientHandler,  AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
         {
-              APIResult(async (HttpClient client) =>
+            try
             {
-                 return await client.PutAsJsonAsync(apiString, postObject);
+                APIResult(async (HttpClient client) =>
+                {
+                    return await client.PutAsJsonAsync(apiString, postObject);
 
-            }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+            }
+            catch (QueryHelperException ex)
+            {
+                throw new QueryHelperException($"Request to {server}/{apiString} failed. {ex.Message}", ex.Response, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Request to {server}/{apiString} failed. {ex.Message}", ex);
+            }
+
         }
         #endregion
 
@@ -56,41 +66,52 @@ namespace web_api_queryhelper
   
         public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, int timeout = 180)
         {
-            return await PutAPIResultAsync<T>(server, apiString, postObject, new HttpClientHandler(), new NameValueCollection(), null, timeout);
+            return await PutAPIResultAsync<T>(server, apiString, postObject, new HttpClientHandler(), null, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await PutAPIResultAsync<T>(server, apiString, postObject, new HttpClientHandler(), new NameValueCollection(), authenticationHeader, timeout);
+            return await PutAPIResultAsync<T>(server, apiString, postObject, new HttpClientHandler(),  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, NameValueCollection headers, int timeout = 180)
         {
-            return await PutAPIResultAsync<T>(server, apiString, postObject, new HttpClientHandler(), headers, null, timeout);
+            return await PutAPIResultAsync<T>(server, apiString, postObject, new HttpClientHandler(), null, headers, timeout);
         }
 
         public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, HttpClientHandler clientHandler, int timeout = 180)
         {
-            return await PutAPIResultAsync<T>(server, apiString, postObject, clientHandler, new NameValueCollection(), null, timeout);
+            return await PutAPIResultAsync<T>(server, apiString, postObject, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await PutAPIResultAsync<T>(server, apiString, postObject, clientHandler, new NameValueCollection(), authenticationHeader, timeout);
+            return await PutAPIResultAsync<T>(server, apiString, postObject, clientHandler, authenticationHeader, new NameValueCollection(),  timeout);
         }
 
         public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-            return await PutAPIResultAsync<T>(server, apiString, postObject, clientHandler, headers, null, timeout);
+            return await PutAPIResultAsync<T>(server, apiString, postObject, clientHandler, null, headers,  timeout);
         }
 
-        public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static async Task<T> PutAPIResultAsync<T>(string server, string apiString, object postObject, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, NameValueCollection headers,  int timeout = 180)
         {
-            return await APIResult<T>(async (HttpClient client) =>
+            try
             {
-                return await client.PutAsJsonAsync(apiString, postObject);
+                return await APIResult<T>(async (HttpClient client) =>
+                {
+                    return await client.PutAsJsonAsync(apiString, postObject);
 
-            }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+            }
+            catch (QueryHelperException ex)
+            {
+                throw new QueryHelperException($"Request to {server}/{apiString} failed. {ex.Message}", ex.Response, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Request to {server}/{apiString} failed. {ex.Message}", ex);
+            }
         }
 
         #endregion

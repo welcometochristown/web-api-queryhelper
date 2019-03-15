@@ -19,41 +19,52 @@ namespace web_api_queryhelper
      
         public static void GetAPIResultAsync(string server, string apiString, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, new HttpClientHandler(), new NameValueCollection(), null, timeout);
+              GetAPIResultAsync(server, apiString, new HttpClientHandler(), null, new NameValueCollection(), timeout);
         }
 
         public static void GetAPIResultAsync(string server, string apiString, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, new HttpClientHandler(), new NameValueCollection(), authenticationHeader, timeout);
+              GetAPIResultAsync(server, apiString, new HttpClientHandler(), authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static void GetAPIResultAsync(string server, string apiString, NameValueCollection headers, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, new HttpClientHandler(), headers, null, timeout);
+              GetAPIResultAsync(server, apiString, new HttpClientHandler(), null, headers, timeout);
         }
 
         public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, clientHandler, new NameValueCollection(), null, timeout);
+              GetAPIResultAsync(server, apiString, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
         public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, clientHandler, new NameValueCollection(), authenticationHeader, timeout);
+              GetAPIResultAsync(server, apiString, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-              GetAPIResultAsync(server, apiString, clientHandler, headers, null, timeout);
+              GetAPIResultAsync(server, apiString, clientHandler,  null, headers, timeout);
         }
 
-        public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static void GetAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler,  AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
         {
-            APIResult(async (HttpClient client) =>
-            {
-                 return await client.GetAsync(apiString);
+            try
+            { 
+                APIResult(async (HttpClient client) =>
+                {
+                     return await client.GetAsync(apiString);
 
-            }, server,  clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server,  clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+            }
+            catch (QueryHelperException ex)
+            {
+                throw new QueryHelperException($"Request to {server}/{apiString} failed. {ex.Message}", ex.Response, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Request to {server}/{apiString} failed. {ex.Message}", ex);
+            }
         }
 
         #endregion
@@ -92,11 +103,22 @@ namespace web_api_queryhelper
 
         public static async Task<T> GetAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await APIResult<T>(async (HttpClient client) =>
-            {
-                return await client.GetAsync(apiString);
+            try
+            { 
+                return await APIResult<T>(async (HttpClient client) =>
+                {
+                    return await client.GetAsync(apiString);
 
-            }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+            }
+            catch (QueryHelperException ex)
+            {
+                throw new QueryHelperException($"Request to {server}/{apiString} failed. {ex.Message}", ex.Response, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Request to {server}/{apiString} failed. {ex.Message}", ex);
+            }
         }
 
         #endregion

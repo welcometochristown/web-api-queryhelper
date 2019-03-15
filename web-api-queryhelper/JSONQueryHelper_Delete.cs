@@ -43,11 +43,22 @@ namespace web_api_queryhelper
 
         public static void DeleteAPIResultAsync(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            APIResult(async (HttpClient client) =>
+            try
             {
-                return await client.DeleteAsync(apiString);
+                APIResult(async (HttpClient client) =>
+                {
+                    return await client.DeleteAsync(apiString);
 
-            }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+            }
+            catch (QueryHelperException ex)
+            {
+                throw new QueryHelperException($"Request to {server}/{apiString} failed. {ex.Message}", ex.Response, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Request to {server}/{apiString} failed. {ex.Message}", ex);
+            }
         }
 
         #endregion
@@ -56,41 +67,53 @@ namespace web_api_queryhelper
 
         public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, int timeout = 180)
         {
-            return await DeleteAPIResultAsync<T>(server, apiString, new HttpClientHandler(), new NameValueCollection(), null, timeout);
+            return await DeleteAPIResultAsync<T>(server, apiString, new HttpClientHandler(),  null, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await DeleteAPIResultAsync<T>(server, apiString, new HttpClientHandler(), new NameValueCollection(), authenticationHeader, timeout);
+            return await DeleteAPIResultAsync<T>(server, apiString, new HttpClientHandler(),  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, NameValueCollection headers, int timeout = 180)
         {
-            return await DeleteAPIResultAsync<T>(server, apiString, new HttpClientHandler(), headers, null, timeout);
+            return await DeleteAPIResultAsync<T>(server, apiString, new HttpClientHandler(), null, headers, timeout);
         }
 
         public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, int timeout = 180)
         {
-            return await DeleteAPIResultAsync<T>(server, apiString, clientHandler, new NameValueCollection(), null, timeout);
+            return await DeleteAPIResultAsync<T>(server, apiString, clientHandler,  null, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
         {
-            return await DeleteAPIResultAsync<T>(server, apiString, clientHandler, new NameValueCollection(), authenticationHeader, timeout);
+            return await DeleteAPIResultAsync<T>(server, apiString, clientHandler,  authenticationHeader, new NameValueCollection(), timeout);
         }
 
         public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, int timeout = 180)
         {
-            return await DeleteAPIResultAsync<T>(server, apiString, clientHandler, headers, null, timeout);
+            return await DeleteAPIResultAsync<T>(server, apiString, clientHandler,  null, headers, timeout);
         }
 
-        public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, NameValueCollection headers, AuthenticationHeaderValue authenticationHeader, int timeout = 180)
+        public static async Task<T> DeleteAPIResultAsync<T>(string server, string apiString, HttpClientHandler clientHandler, AuthenticationHeaderValue authenticationHeader, NameValueCollection headers, int timeout = 180)
         {
-            return await APIResult<T>(async (HttpClient client) =>
+            try
             {
-                return await client.DeleteAsync(apiString);
+                return await APIResult<T>(async (HttpClient client) =>
+                {
+                    return await client.DeleteAsync(apiString);
 
-            }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+                }, server, clientHandler, headers, authenticationHeader, TimeSpan.FromSeconds(timeout));
+
+            }
+            catch(QueryHelperException ex)
+            {
+                throw new QueryHelperException($"Request to {server}/{apiString} failed. {ex.Message}", ex.Response, ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Request to {server}/{apiString} failed. {ex.Message}", ex);
+            }
         }
 
         #endregion
